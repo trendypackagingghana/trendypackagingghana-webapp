@@ -1,6 +1,7 @@
 import Header from "../components/layout/Header";
 import FooterNew from "../components/layout/FooterNew";
 import MobileBottomNav from "../components/layout/MobileBottomNav";
+import MapSection from "../components/contact/MapSection";
 import { company } from "@/app/config/company";
 
 export default function ContactPage() {
@@ -152,20 +153,7 @@ export default function ContactPage() {
         </div>
 
         {/* Map Section */}
-        <div className="mt-16 w-full">
-          <div className="rounded-2xl overflow-hidden border border-border h-[400px]">
-            <iframe
-              src={company.map.embedUrl}
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              allowFullScreen
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              title={`${company.name} location`}
-            />
-          </div>
-        </div>
+        <MapSection />
       </main>
 
       <FooterNew />

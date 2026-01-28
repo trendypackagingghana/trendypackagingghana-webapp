@@ -1,3 +1,5 @@
+import { company } from "@/app/config/company";
+
 const ContactSection = () => {
   return (
     <section id="contact" className="py-16 px-4 md:px-10 max-w-7xl mx-auto w-full">
@@ -41,9 +43,9 @@ const ContactSection = () => {
                 Our Office
               </h3>
               <p className="text-muted-foreground leading-relaxed pl-7">
-                Plot 12, Industrial Area,<br />
-                North Kaneshie, Accra,<br />
-                Ghana
+                {company.contact.address.street},<br />
+                {company.contact.address.city},<br />
+                {company.contact.address.country}
               </p>
             </div>
             
@@ -55,8 +57,8 @@ const ContactSection = () => {
                 Operating Hours
               </h3>
               <p className="text-muted-foreground leading-relaxed pl-7">
-                Mon - Fri: 8:00 AM - 6:00 PM<br />
-                Sat: 9:00 AM - 1:00 PM
+                {company.operatingHours.weekdays}<br />
+                {company.operatingHours.saturday}
               </p>
             </div>
 
@@ -119,14 +121,14 @@ const ContactSection = () => {
       <div className="mt-16 w-full">
         <div className="rounded-2xl overflow-hidden border border-border h-[400px]">
           <iframe
-            src="https://www.google.com/maps?q=Trendy+Packaging+Ghana,+Martey+Carpenter+Rd,+Accra,+Ghana&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            src={company.map.embedUrl}
             width="100%"
             height="100%"
             style={{ border: 0 }}
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
-            title="Trendy Packaging Ghana location"
+            title={`${company.name} location`}
           />
         </div>
       </div>

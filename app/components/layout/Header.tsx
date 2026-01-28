@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { company } from "@/app/config/company";
 
 const Header = () => {
   const pathname = usePathname();
@@ -21,7 +22,7 @@ const Header = () => {
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-3">
               <h1 className="text-xl font-black tracking-tight text-foreground">
-                Trendy Packaging
+                {company.name}
               </h1>
             </Link>
           </div>

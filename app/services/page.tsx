@@ -1,4 +1,5 @@
 import Header from "../components/layout/Header";
+import { company } from "@/app/config/company";
 import FooterNew from "../components/layout/FooterNew";
 import MobileBottomNav from "../components/layout/MobileBottomNav";
 import ServiceCard from "../components/services/ServiceCard";
@@ -91,7 +92,7 @@ export default function ServicesPage() {
               Manufacturing Capabilities
             </h1>
             <p className="text-lg text-muted-foreground leading-relaxed">
-              We provide high-quality plastic packaging solutions designed for precision and durability. Our facility in Ghana specializes in containers for the pharmaceutical, cosmetic, and home care industries.
+              {company.description}
             </p>
           </div>
         </section>

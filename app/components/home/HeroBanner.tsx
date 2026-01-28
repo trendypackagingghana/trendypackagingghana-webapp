@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { company } from "@/app/config/company";
 
 const HeroBanner = () => {
   return (
@@ -13,7 +14,7 @@ const HeroBanner = () => {
             Precision Packaging for West Africa
           </h1>
           <p className="text-white/90 text-lg md:text-xl font-medium max-w-lg">
-            Serving the Pharmaceutical, Cosmetics, and Home Care industries with medical-grade containers and sustainable solutions.
+            Serving the {company.industries.join(", ")} industries with medical-grade containers and sustainable solutions.
           </p>
         </div>
 

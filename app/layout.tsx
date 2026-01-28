@@ -1,12 +1,13 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import { company } from "@/app/config/company";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Trendy Packaging Ghana",
-  description: "Innovative Packaging Solutions for Ghana",
+  title: `${company.name} Ghana`,
+  description: company.description,
 };
 
 export default function RootLayout({

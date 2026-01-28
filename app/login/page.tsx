@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { company } from "@/app/config/company";
 
 export default function LoginPage() {
   return (
@@ -6,7 +7,7 @@ export default function LoginPage() {
       <div className="max-w-md w-full space-y-8 bg-card p-8 rounded-xl shadow-2xl border border-border">
         <div className="text-center">
           <Link href="/" className="text-3xl font-bold text-primary block mb-2">
-            Trendy Packaging
+            {company.name}
           </Link>
           <h2 className="mt-6 text-3xl font-black text-foreground">
             Sign in to your account

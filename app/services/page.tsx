@@ -80,7 +80,7 @@ const facilities = [
 
 export default function ServicesPage() {
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background">
+    <div className="relative flex min-h-screen w-full flex-col pt-16 overflow-x-hidden bg-background">
       <Header />
 
       <main className="flex-1 max-w-[1200px] mx-auto w-full px-6 py-12 pb-24 xl:pb-12">

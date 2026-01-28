@@ -12,35 +12,20 @@ const Header = () => {
     { name: "Home", href: "/" },
     { name: "Products", href: "/products" },
     { name: "Services", href: "/services" },
+    { name: "Contact", href: "#contact" },
   ];
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-border glass-panel">
+    <header className="fixed top-0 z-50 w-full border-b border-border glass-panel">
       <div className="max-w-7xl mx-auto px-4 md:px-10 py-3">
         <div className="flex items-center justify-between">
-          {/* Logo + Search */}
+          {/* Logo */}
           <div className="flex items-center gap-8">
             <Link href="/" className="flex items-center gap-3">
               <h1 className="text-xl font-black tracking-tight text-foreground">
                 Trendy Packaging
               </h1>
             </Link>
-
-            {/* Desktop Search Bar */}
-            <div className="hidden lg:flex min-w-80 max-w-md h-10">
-              <div className="flex w-full items-stretch rounded-lg bg-input border border-border overflow-hidden focus-within:ring-2 focus-within:ring-primary/20 focus-within:border-primary transition-all">
-                <div className="text-muted-foreground flex items-center justify-center pl-4">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-                  </svg>
-                </div>
-                <input
-                  type="text"
-                  className="flex w-full border-none bg-transparent focus:outline-none text-sm placeholder:text-muted-foreground px-3 text-foreground"
-                  placeholder="Search for bottles, pumps, or jars..."
-                />
-              </div>
-            </div>
           </div>
 
           {/* Desktop Nav + Actions */}
@@ -60,13 +45,6 @@ const Header = () => {
             </nav>
 
             <div className="flex items-center gap-4">
-              <Link
-                href="#contact"
-                className="hidden sm:flex min-w-[120px] items-center justify-center rounded-lg h-10 px-5 bg-primary text-white text-sm font-bold shadow-sm hover:opacity-90 transition-all"
-              >
-                Request Quote
-              </Link>
-              
               <Link
                 href="/login"
                 className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center ring-1 ring-primary/20 hover:bg-primary/20 transition-colors"

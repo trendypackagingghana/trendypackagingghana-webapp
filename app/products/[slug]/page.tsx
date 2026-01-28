@@ -75,7 +75,7 @@ export default function ProductDetailPage({ params }: ProductDetailProps) {
   const [activeImage, setActiveImage] = useState(productData.images[0]);
 
   return (
-    <div className="relative flex min-h-screen w-full flex-col overflow-x-hidden bg-background">
+    <div className="relative flex min-h-screen w-full flex-col pt-16 bg-background">
       <Header />
       
       <main className="flex-1 flex flex-col items-center py-8">

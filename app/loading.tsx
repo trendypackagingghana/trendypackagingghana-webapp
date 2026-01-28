@@ -1,7 +1,8 @@
 import ProductSkeleton from "./components/skeletons/ProductSkeleton";
+import LoadingSequence from "./components/skeletons/LoadingSequence";
 
 export default function Loading() {
-  return (
+  const skeleton = (
     <div className="relative flex min-h-screen w-full flex-col pt-16 bg-background">
       <main className="flex-1 max-w-[1280px] mx-auto w-full px-6 py-8 pb-24 xl:pb-8">
         {/* Hero Area Placeholder */}
@@ -22,5 +23,11 @@ export default function Loading() {
         </div>
       </main>
     </div>
+  );
+
+  return (
+    <LoadingSequence 
+      skeleton={skeleton} 
+    />
   );
 }

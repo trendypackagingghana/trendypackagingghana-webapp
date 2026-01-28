@@ -1,38 +1,9 @@
-"use client";
-
-import { useState, useEffect } from "react";
 import ProductSkeleton from "../components/skeletons/ProductSkeleton";
 import Skeleton from "../components/skeletons/Skeleton";
-
-const Spinner = () => (
-  <div className="flex flex-col items-center justify-center min-h-[60vh] gap-4">
-    <div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin" />
-    <p className="text-muted-foreground font-medium animate-pulse text-sm">Initializing Catalog...</p>
-  </div>
-);
+import LoadingSequence from "../components/skeletons/LoadingSequence";
 
 export default function ProductsLoading() {
-  const [stage, setStage] = useState<"loader" | "skeleton">("loader");
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setStage("skeleton");
-    }, 1000); // Show loader for 1 second
-
-    return () => clearTimeout(timer);
-  }, []);
-
-  if (stage === "loader") {
-    return (
-      <div className="relative flex min-h-screen w-full flex-col pt-16 bg-background">
-        <main className="flex-1 max-w-[1440px] mx-auto w-full px-6 py-8">
-          <Spinner />
-        </main>
-      </div>
-    );
-  }
-
-  return (
+  const skeleton = (
     <div className="relative flex min-h-screen w-full flex-col pt-16 bg-background">
       <main className="flex-1 max-w-[1440px] mx-auto w-full px-6 py-8 pb-24 xl:pb-8 text-foreground">
         {/* Section Header Placeholder */}
@@ -62,5 +33,11 @@ export default function ProductsLoading() {
         </div>
       </main>
     </div>
+  );
+
+  return (
+    <LoadingSequence 
+      skeleton={skeleton} 
+    />
   );
 }

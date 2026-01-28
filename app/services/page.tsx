@@ -1,9 +1,9 @@
-import Header from "../components/Header";
-import FooterNew from "../components/FooterNew";
-import MobileBottomNav from "../components/MobileBottomNav";
-import ServiceCard from "../components/ServiceCard";
-import FacilityCard from "../components/FacilityCard";
-import ServicesCTA from "../components/ServicesCTA";
+import Header from "../components/layout/Header";
+import FooterNew from "../components/layout/FooterNew";
+import MobileBottomNav from "../components/layout/MobileBottomNav";
+import ServiceCard from "../components/services/ServiceCard";
+import FacilityCard from "../components/services/FacilityCard";
+import ServicesCTA from "../components/services/ServicesCTA";
 
 const services = [
   {

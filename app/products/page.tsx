@@ -1,7 +1,7 @@
-import Header from "../components/Header";
-import FooterNew from "../components/FooterNew";
-import MobileBottomNav from "../components/MobileBottomNav";
-import ProductCard from "../components/ProductCard";
+import Header from "../components/layout/Header";
+import FooterNew from "../components/layout/FooterNew";
+import MobileBottomNav from "../components/layout/MobileBottomNav";
+import ProductCard from "../components/products/ProductCard";
 
 const products = [
   {

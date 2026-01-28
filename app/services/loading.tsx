@@ -1,9 +1,10 @@
 import Skeleton from "../components/skeletons/Skeleton";
+import LoadingSequence from "../components/skeletons/LoadingSequence";
 
 export default function ServicesLoading() {
-  return (
+  const skeleton = (
     <div className="relative flex min-h-screen w-full flex-col pt-16 bg-background">
-      <main className="flex-1 max-w-[1200px] mx-auto w-full px-6 py-12 pb-24 xl:pb-12">
+      <main className="flex-1 max-w-[1200px] mx-auto w-full px-6 py-12 pb-24 xl:pb-12 text-foreground">
         {/* Page Heading Placeholder */}
         <section className="mb-16">
           <div className="max-w-3xl flex flex-col gap-4">
@@ -19,8 +20,8 @@ export default function ServicesLoading() {
             <div key={i} className="bg-card rounded-2xl p-8 border border-border shadow-sm flex flex-col gap-4">
               <Skeleton className="w-14 h-14 rounded-xl" />
               <Skeleton className="h-6 w-1/2" />
-              <Skeleton className="h-4 w-full" />
-              <Skeleton className="h-4 w-2/3" />
+              <Skeleton className="h-4 w-full text-muted-foreground" />
+              <Skeleton className="h-4 w-2/3 text-muted-foreground" />
             </div>
           ))}
         </section>
@@ -32,12 +33,18 @@ export default function ServicesLoading() {
              {[1, 2, 3].map((i) => (
                <div key={i} className="bg-card p-8 rounded-2xl border border-border shadow-sm flex flex-col gap-3">
                  <Skeleton className="h-6 w-3/4" />
-                 <Skeleton className="h-4 w-full" />
+                 <Skeleton className="h-4 w-full text-muted-foreground" />
                </div>
              ))}
           </div>
         </section>
       </main>
     </div>
+  );
+
+  return (
+    <LoadingSequence 
+      skeleton={skeleton} 
+    />
   );
 }

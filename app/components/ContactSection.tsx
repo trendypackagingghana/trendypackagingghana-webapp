@@ -122,6 +122,8 @@ const ContactSection = () => {
             className="w-full h-full object-cover opacity-50 grayscale hover:grayscale-0 transition-all duration-700"
             alt="Map overview of Accra Industrial Area"
             src="https://lh3.googleusercontent.com/aida-public/AB6AXuBlwK1wQmVZMrjImrf-QsAHP381R3knihsbLd_LF7Mfy-_oc7BCdmBUrzjxUruq2mw1YkiOQq8ajdinNyVo9_mkj1beJt4Sk3tveWwdpa2DA0W4Bpdu-Pw6kqIfziPk1o_Y4AMb_7JSpuP72Vw549XXadAjM1O23jxZ_FacJsTz3xyMknlejejZjb0fAYqSjLlLP9W34af5bwQDdIjyqhEkKSpJXmA-bnvhldpzYty7PAidcTSsKEzmDeDIZS3pg8Zn1B_tKHd8nA71"
+            loading="lazy"
+            decoding="async"
           />
           <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
             <div className="bg-white px-6 py-4 rounded-xl shadow-xl border border-border flex flex-col items-center gap-2 animate-bounce-subtle">

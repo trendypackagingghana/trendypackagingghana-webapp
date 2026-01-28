@@ -23,7 +23,7 @@ const products = [
     description: "Neck: 70mm • Opaque White",
     category: "Home Care",
     categoryColor: "orange" as const,
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCKMd9rvRZHFjyrY-No4az-YJbR3zl2nj7umrg3ER8WrZQ8u-wZmEQZb5lu5eusV14zrl7fQJHkFw_haAy4cMPGdOcSY-Z1Jg4H-l8zPjIjZVaEUCvdaHkXCgQ-VdyBAffOvLck5Cd0k71KawpJfXGDG8jTj5NsTS4e0Jx7bzs3lnewgbPSeccPcUPekiiRq96K4Huz_FgWmZVUdpP3TXuQnxH6vEDl3dkgUkUJm6hrLRi85lXJhj3rbcieoCn4GasxRAwWLH1MCjP1",
+    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuCKMd9rvRZHFjyrY-No4az-YJbR3zl2nj7umrg3ER8WrZQ8u-wZmEQZb5lu5eusV14zrl7fQJHkFw_haAy4cMPGdOcSY-Z1Jg4H-l8zPjIjZVaEUCvdaHkXCgQ-VdyBAffOvLck5Cd0k71KawpJfXGDG8jTj5NsTS4e0Jx7bzs3lnewgbPSeccPcUPekiiRq96K4H7z_FgWmZVUdpP3TXuQnxH6vEDl3dkgUkUJm6hrLRi85lXJhj3rbcieoCn4GasxRAwWLH1MCjP1",
   },
   {
     title: "250ml Cosmo Round",
@@ -51,34 +51,42 @@ const products = [
     description: "Size: 24/410 • Assorted Colors",
     category: "Closures",
     categoryColor: "slate" as const,
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuAC9Xjrb2hrik5xAa3cs4VlEwcvROOXvsPG2yHJaXhTmRJI0H_5DPHUfHJC_oHWCELXLJNEZH0OInCYZ6lnEEUpEKPyJmKT0ISGq1mvFOItChS9UoUW55LIsLtVokfKFmMSH4o0caKAb-kSdOcbZpzab90FR2O7JASDFP0Ao3avcwVsxK6fqTa-ugnASCdDhEzVdP2HOYsNb5O98C0WgFJ7JJtFTl5GI-fHkJtBV_UGkBpm6onJwhyFgSsB_gzJrmoVhPo_xhhG4uz-",
+    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuAC9Xjrb2hrik5xAa3cs4VlEwcvROOXvsPG2yHJaXhTmRJI0H_5DPHUfHJC_oHWCELXLJNEZH0OInCYZ6lnEEUpEKPyJmKT0ISGq1mvFOItChS9UoUW55LIsLtVokfKFmMSH4o0caKAb-kSdOcbZpzab90FR2O7JASDFP0Ao3avcwVsxK6fqTa-ugnASCdDhEzVdP2HOYsNb5O98C0WgFJ7JJTFTl5GI-fHkJtBV_UGkBpm6onJwhyFgSsB_gzJrmoVhPo_xhhG4uz-",
   },
   {
     title: "1000ml Juice Bottle",
     description: "Neck: 38mm • High Clarity",
     category: "Food & Beverage",
     categoryColor: "orange" as const,
-    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDo7nvJUHRJ1K_PKk2_hC4M2-YuDd3VmSvLwL8WJPau5OYo1N3HDECyS_od6ahfRqD6HQkuKVacmwWBqN7UkNSk_PUyhbPozSiCJTucyUTqgqe9qYeCv81wnXPcDCUltuIqvahEnhJQjdK51vf_f49KT7J-ew9pUYEx5kjli-YIZdt3Ryngy17dpvOZCwBNF8b8vFQhG-zaYCd3qamMmNT2VoQlK2bQzlRVuktr2jBRAyCZRFgoD3HIcI0tOHCv_uTjCloM5iYWvmv8",
+    imageUrl: "https://lh3.googleusercontent.com/aida-public/AB6AXuDo7nvJUHRJ1K_PKk2_hC4M-2YuDd3VmSvLwL8WJPau5OYo1N3HDECyS_od6ahfRqD6HQkuKVacmwWBqN7UkNSk_PUyhbPozSiCJTucyUTqgqe9qYeCv81wnXPcDCUltuIqvahEnhJQjdK51vf_f49KT7J-ew9pUYEx5kjli-YIZdt3Ryngy17dpvOZCwBNF8b8vFQhG-zaYCd3qamMmNT2VoQlK2bQzlRVuktr2jBRAyCZRFgoD3HIcI0tOHCv_uTjCloM5iYWvmv8",
   },
 ];
 
-export default function ProductsPage() {
+// Helper to simulate data fetching
+const getProducts = async () => {
+  await new Promise(resolve => setTimeout(resolve, 2500)); // 2.5 second total wait
+  return products;
+};
+
+export default async function ProductsPage() {
+  const data = await getProducts();
+  
   return (
     <div className="relative flex min-h-screen w-full flex-col pt-16 overflow-x-hidden bg-background">
       <Header />
 
-      <main className="flex-1 max-w-[1440px] mx-auto w-full px-6 py-8 pb-24 xl:pb-8">
+      <main className="flex-1 max-w-[1440px] mx-auto w-full px-6 py-8 pb-24 xl:pb-8 text-foreground">
         {/* Section Header & Filter Chips */}
         <div className="flex flex-col gap-6 mb-8">
           <div className="flex items-end justify-between">
             <div>
               <h1 className="text-3xl font-bold text-foreground">Product Catalog</h1>
-              <p className="text-muted-foreground mt-1">
+              <p className="text-muted-foreground mt-1 text-foreground">
                 Browse our premium range of industrial packaging solutions.
               </p>
             </div>
             <div className="hidden sm:flex items-center gap-2 text-sm font-medium text-muted-foreground">
-              <span>Showing {products.length} products</span>
+              <span>Showing {data.length} products</span>
             </div>
           </div>
           
@@ -105,8 +113,8 @@ export default function ProductsPage() {
         </div>
 
         {/* Product Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6">
-          {products.map((product, index) => (
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-4 md:gap-6 text-foreground">
+          {data.map((product, index) => (
             <ProductCard
               key={index}
               {...product}

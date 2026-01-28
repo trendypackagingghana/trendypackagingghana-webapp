@@ -1,6 +1,6 @@
 const NewsletterCTA = () => {
   return (
-    <section className="px-4 mb-16" id="contact" aria-labelledby="newsletter-heading">
+    <section className="px-4 md:px-10 mb-16" id="contact" aria-labelledby="newsletter-heading">
       <div className="bg-card border border-border rounded-3xl p-8 md:p-12 flex flex-col md:flex-row items-center justify-between gap-8 shadow-sm">
         <div className="max-w-xl text-center md:text-left">
           <h2 id="newsletter-heading" className="text-3xl font-bold mb-4 text-foreground">

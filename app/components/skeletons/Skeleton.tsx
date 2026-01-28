@@ -1,10 +1,14 @@
-const Skeleton = ({ className }: { className?: string }) => {
+function Skeleton({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLDivElement>) {
   return (
     <div
-      className={`animate-pulse rounded-md bg-muted/60 ${className}`}
-      aria-hidden="true"
+      className={`animate-pulse rounded-md bg-muted ${className}`}
+      {...props}
     />
   );
-};
+}
 
+export { Skeleton };
 export default Skeleton;

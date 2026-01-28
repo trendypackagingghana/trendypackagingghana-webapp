@@ -32,40 +32,24 @@ const categories = [
 const CategoryCarousel = () => {
   return (
     <section className="mb-12" id="products" aria-labelledby="categories-heading">
-      <div className="flex items-center justify-between px-4 pb-6">
+      <div className="px-4 md:px-10 pb-6">
         <h2 id="categories-heading" className="text-2xl font-bold tracking-tight text-foreground">
           Industrial Categories
         </h2>
-        <div className="flex gap-2">
-          <button
-            className="p-2 rounded-full bg-card border border-border hover:bg-muted text-muted-foreground transition-colors"
-            aria-label="Previous categories"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-            </svg>
-          </button>
-          <button
-            className="p-2 rounded-full bg-card border border-border hover:bg-muted text-muted-foreground transition-colors"
-            aria-label="Next categories"
-          >
-            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-            </svg>
-          </button>
-        </div>
       </div>
 
-      <div className="flex overflow-x-auto pb-4 px-4 scrollbar-hide gap-6">
-        {categories.map((category, index) => (
-          <CategoryCard
-            key={index}
-            title={category.title}
-            description={category.description}
-            href={category.href}
-            imageUrl={category.imageUrl}
-          />
-        ))}
+      <div className="px-4 md:px-10 overflow-hidden">
+        <div className="flex overflow-x-auto pb-4 scrollbar-hide gap-6">
+          {categories.map((category, index) => (
+            <CategoryCard
+              key={index}
+              title={category.title}
+              description={category.description}
+              href={category.href}
+              imageUrl={category.imageUrl}
+            />
+          ))}
+        </div>
       </div>
     </section>
   );

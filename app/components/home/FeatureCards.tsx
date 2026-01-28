@@ -2,7 +2,7 @@ import Link from "next/link";
 
 const FeatureCards = () => {
   return (
-    <section className="px-4 mb-16 grid grid-cols-1 md:grid-cols-2 gap-6" id="services" aria-labelledby="services-heading">
+    <section className="px-4 md:px-10 mb-16 grid grid-cols-1 md:grid-cols-2 gap-6" id="services" aria-labelledby="services-heading">
       <h2 id="services-heading" className="sr-only">Our Services</h2>
       
       {/* Custom Molds Card */}

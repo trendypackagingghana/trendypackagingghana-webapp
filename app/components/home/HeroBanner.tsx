@@ -1,12 +1,14 @@
-import Link from "next/link";
 import { company } from "@/app/config/company";
 
 const HeroBanner = () => {
   return (
-    <section className="px-4 mb-12" aria-labelledby="hero-heading">
+    <section className="px-4 md:px-10 mb-12" aria-labelledby="hero-heading">
       <div
         className="flex min-h-[520px] flex-col gap-6 bg-cover bg-center rounded-2xl items-start justify-end px-6 pb-12 md:px-16 md:pb-16 relative overflow-hidden shadow-2xl"
-        style={{ backgroundImage: "linear-gradient(rgba(0, 0, 0, 0.2) 0%, rgba(0, 0, 0, 0.7) 100%), url('/images/banner/banner-one.webp')" }}>
+        style={{ backgroundImage: "url('/images/banner/banner-one.webp')" }}>
+        {/* Translucent overlay */}
+        <div className="absolute inset-0 bg-black/55" />
+
         {/* Content */}
         <div className="flex flex-col gap-4 max-w-2xl relative z-10">
           <span className="bg-white/20 backdrop-blur-md border border-white/20 text-white px-3 py-1 rounded-full text-xs font-bold uppercase tracking-widest w-fit">
@@ -18,23 +20,6 @@ const HeroBanner = () => {
           <p className="text-white/90 text-lg md:text-xl font-medium max-w-lg">
             Serving the {company.industries.join(", ")} industries with medical-grade containers and sustainable solutions.
           </p>
-        </div>
-
-        {/* CTA Buttons */}
-        <div className="flex flex-wrap gap-4 mt-4 relative z-10">
-          <Link
-            href="/products"
-            className="flex items-center justify-center rounded-lg h-12 px-8 bg-white text-primary text-base font-bold hover:bg-slate-50 transition-colors shadow-lg"
-          >
-            View Catalog
-          </Link>
-        </div>
-
-        {/* Carousel Indicators (Visual) */}
-        <div className="absolute bottom-6 right-6 md:right-16 flex gap-2" aria-hidden="true">
-          <div className="h-1.5 w-8 bg-white rounded-full"></div>
-          <div className="h-1.5 w-4 bg-white/40 rounded-full"></div>
-          <div className="h-1.5 w-4 bg-white/40 rounded-full"></div>
         </div>
       </div>
     </section>

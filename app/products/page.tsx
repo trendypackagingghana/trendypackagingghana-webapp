@@ -75,7 +75,7 @@ export default async function ProductsPage() {
     <div className="relative flex min-h-screen w-full flex-col pt-16 overflow-x-hidden bg-background">
       <Header />
 
-      <main className="flex-1 max-w-[1440px] mx-auto w-full px-6 py-8 pb-24 xl:pb-8 text-foreground">
+      <main className="flex-1 max-w-7xl mx-auto w-full px-4 md:px-10 py-8 pb-24 xl:pb-8 text-foreground">
         {/* Section Header & Filter Chips */}
         <div className="flex flex-col gap-6 mb-8">
           <div className="flex items-end justify-between">

@@ -1,23 +1,28 @@
 import { Suspense } from "react";
 import SignOutButton from "./SignOutButton";
 import FAB from "./FAB";
-import FinishedGoodsTable from "./FinishedGoodsTable";
+import ProductionRunsList from "./ProductionRunsList";
 import Skeleton from "../components/skeletons/Skeleton";
+import { Card, CardContent, CardHeader } from "@/components/ui/card";
 
-function TableSkeleton() {
+function CardsSkeleton() {
   return (
-    <div className="rounded-xl border border-border overflow-hidden">
-      <div className="bg-muted/50 px-4 py-3 border-b border-border flex gap-8">
-        {Array.from({ length: 7 }).map((_, i) => (
-          <Skeleton key={i} className="h-4 w-20" />
-        ))}
-      </div>
-      {Array.from({ length: 5 }).map((_, i) => (
-        <div key={i} className="px-4 py-3 border-b border-border flex gap-8">
-          {Array.from({ length: 7 }).map((_, j) => (
-            <Skeleton key={j} className="h-4 w-20" />
-          ))}
-        </div>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {Array.from({ length: 3 }).map((_, i) => (
+        <Card key={i}>
+          <CardHeader>
+            <div className="flex justify-between">
+              <Skeleton className="h-4 w-32" />
+              <Skeleton className="h-5 w-16 rounded-full" />
+            </div>
+          </CardHeader>
+          <CardContent className="space-y-3">
+            <Skeleton className="h-8 w-40" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-full" />
+            <Skeleton className="h-4 w-3/4" />
+          </CardContent>
+        </Card>
       ))}
     </div>
   );
@@ -30,9 +35,11 @@ export default function DashboardPage() {
         <SignOutButton />
       </header>
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <h1 className="text-3xl font-bold text-foreground mb-8">Finished Goods</h1>
-        <Suspense fallback={<TableSkeleton />}>
-          <FinishedGoodsTable />
+        <h1 className="text-3xl font-bold text-foreground mb-8">
+          Production Runs
+        </h1>
+        <Suspense fallback={<CardsSkeleton />}>
+          <ProductionRunsList />
         </Suspense>
       </main>
       <FAB />

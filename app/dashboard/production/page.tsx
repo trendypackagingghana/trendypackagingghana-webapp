@@ -1,4 +1,5 @@
 import PageHeader from "../_components/page-header";
+import { CreateRunFab } from "../_features/production-runs";
 import MachineGrid from "./_components/machine-grid";
 import ShiftSchedule from "./_components/shift-schedule";
 
@@ -8,6 +9,7 @@ export default function ProductionPage() {
       <PageHeader title="Production" />
       <MachineGrid />
       <ShiftSchedule />
+      <CreateRunFab />
     </div>
   );
 }

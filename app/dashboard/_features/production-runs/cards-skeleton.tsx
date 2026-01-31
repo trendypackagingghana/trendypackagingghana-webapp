@@ -1,10 +1,10 @@
 export default function CardsSkeleton() {
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
+    <div className="flex gap-4 md:gap-6 overflow-x-auto pb-2 scrollbar-thin">
       {Array.from({ length: 3 }).map((_, i) => (
         <div
           key={i}
-          className="bg-card rounded-xl border border-border shadow-sm p-5 animate-pulse"
+          className="min-w-[280px] max-w-[320px] flex-shrink-0 bg-card rounded-xl border border-border shadow-sm p-5 animate-pulse"
         >
           <div className="flex justify-between items-start mb-4">
             <div className="space-y-2">

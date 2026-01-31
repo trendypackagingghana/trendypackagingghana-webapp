@@ -5,7 +5,6 @@ import {
   ProductionRunsList,
   StatusFilter,
   CardsSkeleton,
-  CreateRunFab,
 } from "./_features/production-runs";
 import StockChart from "./_features/insights/stock-chart";
 import StaffOverview from "./_features/insights/staff-overview";
@@ -37,7 +36,6 @@ export default async function DashboardPage({
         <StaffOverview />
       </section>
 
-      <CreateRunFab />
     </div>
   );
 }

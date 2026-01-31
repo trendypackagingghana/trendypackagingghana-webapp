@@ -1,13 +1,57 @@
-import PageHeader from "../_components/page-header";
-import InventoryStats from "./_components/inventory-stats";
-import MaterialsList from "./_components/materials-list";
+import { Suspense } from "react";
+import {
+  getFinishedGoodsInventory,
+  getInventoryStats,
+  getRawMaterialsInventory,
+  getStockMovements,
+} from "./_lib/data";
+import { InventoryStatsCards } from "./_components/inventory-stats";
+import { InventoryTable } from "./_components/inventory-table";
+import { StockLedger } from "./_components/stock-ledger";
 
-export default function InventoryPage() {
+export const metadata = {
+  title: "Inventory | Trendy Packaging",
+};
+
+export default async function InventoryPage() {
+  const [stats, finishedGoods, rawMaterials, movements] = await Promise.all([
+    getInventoryStats(),
+    getFinishedGoodsInventory(),
+    getRawMaterialsInventory(),
+    getStockMovements(),
+  ]);
+
   return (
-    <div className="px-4 sm:px-6 lg:px-8 py-6 md:py-8 max-w-7xl space-y-8">
-      <PageHeader title="Inventory" />
-      <InventoryStats />
-      <MaterialsList />
+    <div className="flex-1 w-full max-w-[1600px] mx-auto p-4 md:p-6 space-y-6">
+      {/* 
+        Stats Section 
+      */}
+      <Suspense fallback={<div>Loading stats...</div>}>
+        <InventoryStatsCards stats={stats} />
+      </Suspense>
+
+      {/* 
+        Main Content Grid 
+      */}
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        
+        {/* Inventory Section (Left 8 cols) */}
+        <div className="lg:col-span-8 space-y-4">
+          <Suspense fallback={<div>Loading inventory...</div>}>
+            <InventoryTable 
+                finishedGoods={finishedGoods} 
+                rawMaterials={rawMaterials} 
+            />
+          </Suspense>
+        </div>
+
+        {/* Stock Ledger (Right 4 cols) */}
+        <div className="lg:col-span-4">
+          <Suspense fallback={<div>Loading ledger...</div>}>
+            <StockLedger movements={movements} />
+          </Suspense>
+        </div>
+      </div>
     </div>
   );
 }

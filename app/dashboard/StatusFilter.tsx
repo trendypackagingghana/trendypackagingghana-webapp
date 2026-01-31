@@ -1,7 +1,6 @@
 "use client";
 
 import { useRouter, useSearchParams } from "next/navigation";
-import { Button } from "@/components/ui/button";
 
 const STATUSES = ["All", "Active", "Completed"] as const;
 
@@ -21,18 +20,21 @@ export default function StatusFilter() {
   }
 
   return (
-    <div className="flex gap-2 flex-wrap">
+    <div className="flex gap-2 overflow-x-auto scrollbar-hide -mx-4 px-4 sm:mx-0 sm:px-0">
       {STATUSES.map((status) => {
         const isActive = status === current;
         return (
-          <Button
+          <button
             key={status}
-            variant={isActive ? "default" : "outline"}
-            size="sm"
             onClick={() => handleFilter(status)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-colors ${
+              isActive
+                ? "bg-foreground text-background"
+                : "bg-muted text-muted-foreground hover:bg-muted/80"
+            }`}
           >
             {status}
-          </Button>
+          </button>
         );
       })}
     </div>

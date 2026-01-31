@@ -60,7 +60,7 @@ export default async function ProductionRunsList({
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
       {runs.map((run: Record<string, unknown>) => (
         <ProductionRunCard key={run.id as string} run={run} />
       ))}

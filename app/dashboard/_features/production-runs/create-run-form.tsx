@@ -31,11 +31,7 @@ interface FinishedGood {
 
 type Step = "form" | "preview";
 
-export default function CreateProductionRunForm({
-  onClose,
-}: {
-  onClose: () => void;
-}) {
+export default function CreateRunForm({ onClose }: { onClose: () => void }) {
   const router = useRouter();
   const [step, setStep] = useState<Step>("form");
 

@@ -1,24 +1,21 @@
 "use client";
 
 import { useState } from "react";
-import CompleteProductionRunDialog from "./CompleteProductionRunDialog";
-
-interface ProductionRunCardProps {
-  run: Record<string, unknown>;
-}
+import type { ProductionRun } from "../../_lib/types";
+import CompleteRunDialog from "./complete-run-dialog";
+import RunComparisonDialog from "./run-comparison-dialog";
 
 const STATUS_STYLES: Record<string, string> = {
   Active: "bg-emerald-100 text-emerald-700",
   Completed: "bg-blue-100 text-blue-700",
 };
 
-export default function ProductionRunCard({ run }: ProductionRunCardProps) {
+export default function ProductionRunCard({ run }: { run: ProductionRun }) {
   const [dialogOpen, setDialogOpen] = useState(false);
 
-  const status = run.status as string;
-  const isCompleted = status === "Completed";
+  const isCompleted = run.status === "Completed";
 
-  const plannedDate = new Date(run.planned_start_time as string);
+  const plannedDate = new Date(run.planned_start_time);
   const dateStr = plannedDate.toLocaleDateString("en-GB", {
     day: "numeric",
     month: "short",
@@ -28,12 +25,24 @@ export default function ProductionRunCard({ run }: ProductionRunCardProps) {
     minute: "2-digit",
   });
 
-  // For completed runs, compute a rough "progress" representation
-  const targetQty = run.target_quantity as number;
-  const actualPieces = (run.actual_pieces as number) ?? 0;
+  const actualPieces = run.actual_pieces ?? 0;
   const progressPct = isCompleted
-    ? Math.min(Math.round((actualPieces / targetQty) * 100), 100)
+    ? Math.min(Math.round((actualPieces / run.target_quantity) * 100), 100)
     : 0;
+
+  // For completed runs, show actual values; for active, show expected
+  const displayRawKg = isCompleted
+    ? (run.actual_raw_kg ?? run.expected_raw_kg)
+    : run.expected_raw_kg;
+  const displayMbKg = isCompleted
+    ? (run.actual_masterbatch_kg ?? run.expected_masterbatch_kg)
+    : run.expected_masterbatch_kg;
+  const displayCost = isCompleted
+    ? ((run.actual_labour_cost ?? 0) + (run.actual_material_cost ?? 0))
+    : (run.expected_labour_cost + run.expected_material_cost);
+  const displayShift = isCompleted && run.actual_shift
+    ? run.actual_shift
+    : run.shift;
 
   return (
     <>
@@ -42,11 +51,11 @@ export default function ProductionRunCard({ run }: ProductionRunCardProps) {
         className="bg-card p-4 sm:p-5 rounded-xl border border-border shadow-sm cursor-pointer
                    hover:shadow-md transition-shadow active:scale-[0.98] active:transition-transform"
       >
-        {/* Header: title + badge */}
+        {/* Header */}
         <div className="flex justify-between items-start mb-3 sm:mb-4">
           <div className="min-w-0 mr-3">
             <p className="text-sm font-bold mb-0.5 truncate">
-              {run.finished_good_sku as string}
+              {run.finished_good_sku}
             </p>
             <p className="text-xs text-muted-foreground">
               {dateStr} • {timeStr} Start
@@ -54,69 +63,68 @@ export default function ProductionRunCard({ run }: ProductionRunCardProps) {
           </div>
           <span
             className={`shrink-0 px-2 py-1 text-[10px] font-bold rounded uppercase ${
-              STATUS_STYLES[status] ?? "bg-muted text-muted-foreground"
+              STATUS_STYLES[run.status] ?? "bg-muted text-muted-foreground"
             }`}
           >
-            {status}
+            {run.status}
           </span>
         </div>
 
-        {/* Metrics row */}
+        {/* Section label */}
+        <p className="text-[10px] text-muted-foreground font-semibold uppercase tracking-widest mb-2">
+          {isCompleted ? "Actual" : "Estimated"}
+        </p>
+
+        {/* Metrics */}
         <div className="grid grid-cols-3 gap-2 mb-3 sm:mb-4">
           <div className="bg-muted/60 rounded-lg p-2 text-center">
             <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
-              Target
+              {isCompleted ? "Produced" : "Target"}
             </p>
-            <p className="text-sm font-bold">{targetQty.toLocaleString()}</p>
+            <p className="text-sm font-bold">
+              {isCompleted
+                ? actualPieces.toLocaleString()
+                : run.target_quantity.toLocaleString()}
+            </p>
           </div>
           <div className="bg-muted/60 rounded-lg p-2 text-center">
             <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
               Pcs/Hr
             </p>
-            <p className="text-sm font-bold">{run.pieces_per_hour as number}</p>
+            <p className="text-sm font-bold">{run.pieces_per_hour}</p>
           </div>
           <div className="bg-muted/60 rounded-lg p-2 text-center">
             <p className="text-[10px] text-muted-foreground font-medium uppercase tracking-wide">
               Shift
             </p>
-            <p className="text-sm font-bold capitalize">
-              {run.shift as string}
-            </p>
+            <p className="text-sm font-bold capitalize">{displayShift}</p>
           </div>
         </div>
 
-        {/* Expected costs row */}
+        {/* Material & cost summary */}
         <div className="flex justify-between text-xs mb-3 sm:mb-4">
           <div>
             <span className="text-muted-foreground">Raw </span>
-            <span className="font-semibold">
-              {run.expected_raw_kg as number} kg
-            </span>
+            <span className="font-semibold">{displayRawKg} kg</span>
           </div>
           <div>
             <span className="text-muted-foreground">MB </span>
-            <span className="font-semibold">
-              {run.expected_masterbatch_kg as number} kg
-            </span>
+            <span className="font-semibold">{displayMbKg} kg</span>
           </div>
           <div>
             <span className="text-muted-foreground">Cost </span>
-            <span className="font-semibold">
-              ₵
-              {(
-                (run.expected_labour_cost as number) +
-                (run.expected_material_cost as number)
-              ).toFixed(2)}
-            </span>
+            <span className="font-semibold">₵{displayCost.toFixed(2)}</span>
           </div>
         </div>
 
-        {/* Progress / status bar */}
+        {/* Footer */}
         {isCompleted ? (
           <div className="flex flex-col gap-1.5">
             <div className="flex justify-between text-xs font-medium">
               <span>Completed</span>
-              <span>{actualPieces.toLocaleString()} pcs ({progressPct}%)</span>
+              <span>
+                {actualPieces.toLocaleString()} pcs ({progressPct}%)
+              </span>
             </div>
             <div className="w-full bg-muted h-1.5 rounded-full overflow-hidden">
               <div
@@ -130,7 +138,7 @@ export default function ProductionRunCard({ run }: ProductionRunCardProps) {
             <span className="text-muted-foreground">
               Est.{" "}
               <span className="text-foreground font-semibold">
-                {run.expected_hours as number} hrs
+                {run.expected_hours} hrs
               </span>
             </span>
             <span className="material-symbols-outlined text-base text-muted-foreground">
@@ -140,20 +148,29 @@ export default function ProductionRunCard({ run }: ProductionRunCardProps) {
         )}
       </div>
 
-      <CompleteProductionRunDialog
-        run={{
-          id: run.id as string,
-          finished_good_sku: run.finished_good_sku as string,
-          target_quantity: targetQty,
-          pieces_per_hour: run.pieces_per_hour as number,
-          expected_raw_kg: run.expected_raw_kg as number,
-          expected_masterbatch_kg: run.expected_masterbatch_kg as number,
-          expected_labour_cost: run.expected_labour_cost as number,
-          expected_material_cost: run.expected_material_cost as number,
-        }}
-        open={dialogOpen}
-        onOpenChange={setDialogOpen}
-      />
+      {/* Active → completion dialog; Completed → read-only comparison */}
+      {isCompleted ? (
+        <RunComparisonDialog
+          run={run}
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+        />
+      ) : (
+        <CompleteRunDialog
+          run={{
+            id: run.id,
+            finished_good_sku: run.finished_good_sku,
+            target_quantity: run.target_quantity,
+            pieces_per_hour: run.pieces_per_hour,
+            expected_raw_kg: run.expected_raw_kg,
+            expected_masterbatch_kg: run.expected_masterbatch_kg,
+            expected_labour_cost: run.expected_labour_cost,
+            expected_material_cost: run.expected_material_cost,
+          }}
+          open={dialogOpen}
+          onOpenChange={setDialogOpen}
+        />
+      )}
     </>
   );
 }

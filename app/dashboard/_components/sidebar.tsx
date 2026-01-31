@@ -1,24 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
+import { NAV_ITEMS } from "../_lib/navigation";
 
-const NAV_ITEMS = [
-  { href: "/dashboard", icon: "dashboard", label: "Dashboard" },
-  { href: "/dashboard/inventory", icon: "inventory_2", label: "Inventory" },
-  { href: "/dashboard/production", icon: "precision_manufacturing", label: "Production" },
-  { href: "/dashboard/staff", icon: "badge", label: "Staff" },
-  { href: "/dashboard/analytics", icon: "bar_chart_4_bars", label: "Analytics" },
-];
-
-export default function Sidebar({
-  open,
-  onClose,
-}: {
+interface SidebarProps {
   open: boolean;
   onClose: () => void;
-}) {
+}
+
+export default function Sidebar({ open, onClose }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
 
@@ -67,7 +58,7 @@ export default function Sidebar({
         </nav>
       </div>
 
-      {/* Bottom: user + sign out */}
+      {/* Bottom: sign out */}
       <div className="border-t border-border pt-4">
         <button
           onClick={handleSignOut}
@@ -90,12 +81,7 @@ export default function Sidebar({
       {/* Mobile overlay */}
       {open && (
         <div className="fixed inset-0 z-50 lg:hidden">
-          {/* Backdrop */}
-          <div
-            className="absolute inset-0 bg-black/50"
-            onClick={onClose}
-          />
-          {/* Drawer */}
+          <div className="absolute inset-0 bg-black/50" onClick={onClose} />
           <aside className="absolute inset-y-0 left-0 w-64 bg-card border-r border-border overflow-y-auto animate-in slide-in-from-left duration-200">
             {nav}
           </aside>

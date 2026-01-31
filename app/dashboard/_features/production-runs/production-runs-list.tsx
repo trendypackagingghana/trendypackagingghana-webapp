@@ -1,8 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
-import ProductionRunCard from "./ProductionRunCard";
+import type { ProductionRun } from "../../_lib/types";
+import ProductionRunCard from "./production-run-card";
 
 const VALID_STATUSES = ["Active", "Completed"];
-
 const STATUS_ORDER: Record<string, number> = { Active: 0, Completed: 1 };
 
 export default async function ProductionRunsList({
@@ -61,8 +61,8 @@ export default async function ProductionRunsList({
 
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
-      {runs.map((run: Record<string, unknown>) => (
-        <ProductionRunCard key={run.id as string} run={run} />
+      {runs.map((run: ProductionRun) => (
+        <ProductionRunCard key={run.id} run={run} />
       ))}
     </div>
   );

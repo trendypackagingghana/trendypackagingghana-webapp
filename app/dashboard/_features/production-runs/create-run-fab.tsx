@@ -9,9 +9,9 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import CreateProductionRunForm from "./CreateProductionRunForm";
+import CreateRunForm from "./create-run-form";
 
-export default function FAB() {
+export default function CreateRunFab() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -33,7 +33,7 @@ export default function FAB() {
               Configure and preview expected values before creating.
             </DialogDescription>
           </DialogHeader>
-          <CreateProductionRunForm onClose={() => setIsOpen(false)} />
+          <CreateRunForm onClose={() => setIsOpen(false)} />
         </DialogContent>
       </Dialog>
     </>

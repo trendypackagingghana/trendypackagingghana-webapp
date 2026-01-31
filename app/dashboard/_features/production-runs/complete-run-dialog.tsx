@@ -21,23 +21,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { PRODUCTION_CONSTANTS } from "@/lib/constants/production";
-
-interface ProductionRun {
-  id: string;
-  finished_good_sku: string;
-  target_quantity: number;
-  pieces_per_hour: number;
-  expected_raw_kg: number;
-  expected_masterbatch_kg: number;
-  expected_labour_cost: number;
-  expected_material_cost: number;
-}
-
-interface CompleteProductionRunDialogProps {
-  run: ProductionRun;
-  open: boolean;
-  onOpenChange: (open: boolean) => void;
-}
+import type { ProductionRunSummary } from "../../_lib/types";
 
 type Step = "form" | "comparison";
 
@@ -64,7 +48,9 @@ function computePreviewCosts(
 
   const hours = actualPieces / piecesPerHour;
   return {
-    labour: Math.round(hours * OPERATORS_PER_MACHINE * LABOUR_COST_PER_HOUR * 100) / 100,
+    labour:
+      Math.round(hours * OPERATORS_PER_MACHINE * LABOUR_COST_PER_HOUR * 100) /
+      100,
     material:
       Math.round(
         (actualRawKg * RAW_COST_PER_KG +
@@ -74,11 +60,21 @@ function computePreviewCosts(
   };
 }
 
-export default function CompleteProductionRunDialog({
+// ---------------------------------------------------------------------------
+// Main dialog
+// ---------------------------------------------------------------------------
+
+interface CompleteRunDialogProps {
+  run: ProductionRunSummary;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}
+
+export default function CompleteRunDialog({
   run,
   open,
   onOpenChange,
-}: CompleteProductionRunDialogProps) {
+}: CompleteRunDialogProps) {
   const router = useRouter();
   const [step, setStep] = useState<Step>("form");
   const [submitting, setSubmitting] = useState(false);
@@ -118,13 +114,13 @@ export default function CompleteProductionRunDialog({
     setError(null);
   }
 
-  function handleOpenChange(open: boolean) {
-    if (!open) {
+  function handleOpenChange(nextOpen: boolean) {
+    if (!nextOpen) {
       setStep("form");
       setError(null);
       setSubmitting(false);
     }
-    onOpenChange(open);
+    onOpenChange(nextOpen);
   }
 
   async function handleComplete() {
@@ -191,7 +187,11 @@ export default function CompleteProductionRunDialog({
             </Button>
           ) : (
             <>
-              <Button variant="outline" onClick={handleBack} disabled={submitting}>
+              <Button
+                variant="outline"
+                onClick={handleBack}
+                disabled={submitting}
+              >
                 Back
               </Button>
               <Button onClick={handleComplete} disabled={submitting}>
@@ -204,6 +204,10 @@ export default function CompleteProductionRunDialog({
     </Dialog>
   );
 }
+
+// ---------------------------------------------------------------------------
+// Form step
+// ---------------------------------------------------------------------------
 
 function FormStep({
   form,
@@ -286,12 +290,16 @@ function FormStep({
   );
 }
 
+// ---------------------------------------------------------------------------
+// Comparison step
+// ---------------------------------------------------------------------------
+
 function ComparisonStep({
   run,
   form,
   preview,
 }: {
-  run: ProductionRun;
+  run: ProductionRunSummary;
   form: FormValues;
   preview: { labour: number; material: number };
 }) {
@@ -334,7 +342,7 @@ function ComparisonStep({
 
   return (
     <div className="space-y-3">
-      {/* Mobile: stacked; md: table */}
+      {/* Desktop table */}
       <div className="hidden md:block">
         <table className="w-full text-sm">
           <thead>
@@ -368,7 +376,7 @@ function ComparisonStep({
         </table>
       </div>
 
-      {/* Mobile layout */}
+      {/* Mobile stacked */}
       <div className="md:hidden space-y-4">
         <div>
           <h4 className="text-xs font-semibold text-muted-foreground uppercase tracking-wide mb-2">

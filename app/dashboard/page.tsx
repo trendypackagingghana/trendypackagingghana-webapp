@@ -1,37 +1,14 @@
 import { Suspense } from "react";
-import FAB from "./FAB";
-import ProductionRunsList from "./ProductionRunsList";
-import StatusFilter from "./StatusFilter";
-import AlertBar from "./AlertBar";
-import StockChart from "./StockChart";
-import StaffOverview from "./StaffOverview";
-
-function CardsSkeleton() {
-  return (
-    <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4 md:gap-6">
-      {Array.from({ length: 3 }).map((_, i) => (
-        <div
-          key={i}
-          className="bg-card rounded-xl border border-border shadow-sm p-5 animate-pulse"
-        >
-          <div className="flex justify-between items-start mb-4">
-            <div className="space-y-2">
-              <div className="h-4 w-28 bg-muted rounded" />
-              <div className="h-3 w-36 bg-muted rounded" />
-            </div>
-            <div className="h-5 w-16 bg-muted rounded" />
-          </div>
-          <div className="space-y-3 mb-4">
-            <div className="h-3 w-full bg-muted rounded" />
-            <div className="h-3 w-full bg-muted rounded" />
-            <div className="h-3 w-3/4 bg-muted rounded" />
-          </div>
-          <div className="h-3 w-24 bg-muted rounded" />
-        </div>
-      ))}
-    </div>
-  );
-}
+import PageHeader from "./_components/page-header";
+import AlertBar from "./_features/alerts/alert-bar";
+import {
+  ProductionRunsList,
+  StatusFilter,
+  CardsSkeleton,
+  CreateRunFab,
+} from "./_features/production-runs";
+import StockChart from "./_features/insights/stock-chart";
+import StaffOverview from "./_features/insights/staff-overview";
 
 export default async function DashboardPage({
   searchParams,
@@ -45,10 +22,9 @@ export default async function DashboardPage({
       <AlertBar />
 
       <section>
-        <div className="flex flex-col gap-3 mb-4 sm:mb-6">
-          <h2 className="text-lg font-bold">Production Runs</h2>
+        <PageHeader title="Production Runs">
           <StatusFilter />
-        </div>
+        </PageHeader>
         <Suspense key={status ?? "all"} fallback={<CardsSkeleton />}>
           <ProductionRunsList status={status} />
         </Suspense>
@@ -61,7 +37,7 @@ export default async function DashboardPage({
         <StaffOverview />
       </section>
 
-      <FAB />
+      <CreateRunFab />
     </div>
   );
 }

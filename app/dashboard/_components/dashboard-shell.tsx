@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import Sidebar from "./Sidebar";
+import Sidebar from "./sidebar";
 
 export default function DashboardShell({
   children,
@@ -25,17 +25,13 @@ export default function DashboardShell({
             >
               <span className="material-symbols-outlined">menu</span>
             </button>
-            <div className="flex flex-col items-center">
-              <span className="text-sm font-bold leading-tight">
-                Trendy Packaging
-              </span>
-            </div>
-            {/* Spacer to center title */}
+            <span className="text-sm font-bold leading-tight">
+              Trendy Packaging
+            </span>
             <div className="w-10" />
           </div>
         </header>
 
-        {/* Page content */}
         <main className="flex-1">{children}</main>
       </div>
     </div>

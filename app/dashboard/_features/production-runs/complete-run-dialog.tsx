@@ -31,7 +31,6 @@ interface FormValues {
   actual_bags: string;
   actual_loose_pieces: string;
   actual_raw_kg: string;
-  actual_masterbatch_kg: string;
 }
 
 function computePreviewCosts(
@@ -87,7 +86,6 @@ export default function CompleteRunDialog({
     actual_bags: "",
     actual_loose_pieces: "",
     actual_raw_kg: "",
-    actual_masterbatch_kg: "",
   });
 
   const piecesPerBag = run.pieces_per_bag ?? 0;
@@ -95,14 +93,13 @@ export default function CompleteRunDialog({
   const loosePieces = Number(form.actual_loose_pieces) || 0;
   const pieces = bags * piecesPerBag + loosePieces;
   const rawKg = Number(form.actual_raw_kg);
-  const mbKg = Number(form.actual_masterbatch_kg);
+  const mbKg = Math.round(rawKg * 0.02 * 100) / 100;
 
   const formValid =
     form.completed_at &&
     form.actual_shift &&
     pieces > 0 &&
-    rawKg > 0 &&
-    mbKg > 0;
+    rawKg > 0;
 
   const preview = formValid
     ? computePreviewCosts(pieces, run.pieces_per_hour, rawKg, mbKg)
@@ -180,9 +177,9 @@ export default function CompleteRunDialog({
         )}
 
         {step === "form" ? (
-          <FormStep form={form} setForm={setForm} piecesPerBag={piecesPerBag} totalPieces={pieces} />
+          <FormStep form={form} setForm={setForm} piecesPerBag={piecesPerBag} totalPieces={pieces} masterbatchKg={mbKg} />
         ) : (
-          <ComparisonStep run={run} form={form} preview={preview!} totalPieces={pieces} />
+          <ComparisonStep run={run} form={form} preview={preview!} totalPieces={pieces} masterbatchKg={mbKg} />
         )}
 
         <DialogFooter>
@@ -219,11 +216,13 @@ function FormStep({
   setForm,
   piecesPerBag,
   totalPieces,
+  masterbatchKg,
 }: {
   form: FormValues;
   setForm: React.Dispatch<React.SetStateAction<FormValues>>;
   piecesPerBag: number;
   totalPieces: number;
+  masterbatchKg: number;
 }) {
   function update(field: keyof FormValues, value: string) {
     setForm((prev) => ({ ...prev, [field]: value }));
@@ -310,17 +309,9 @@ function FormStep({
         />
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="actual_masterbatch_kg">Masterbatch Used (kg)</Label>
-        <Input
-          id="actual_masterbatch_kg"
-          type="number"
-          min="0.01"
-          step="0.01"
-          placeholder="e.g. 2.4"
-          value={form.actual_masterbatch_kg}
-          onChange={(e) => update("actual_masterbatch_kg", e.target.value)}
-        />
+      <div className="rounded-md bg-muted/60 p-3 text-sm">
+        <span className="text-muted-foreground">Masterbatch (2% of raw): </span>
+        <span className="font-semibold">{masterbatchKg > 0 ? `${masterbatchKg} kg` : "—"}</span>
       </div>
     </div>
   );
@@ -335,14 +326,16 @@ function ComparisonStep({
   form,
   preview,
   totalPieces,
+  masterbatchKg,
 }: {
   run: ProductionRunSummary;
   form: FormValues;
   preview: { labour: number; material: number };
   totalPieces: number;
+  masterbatchKg: number;
 }) {
   const rawKg = Number(form.actual_raw_kg);
-  const mbKg = Number(form.actual_masterbatch_kg);
+  const mbKg = masterbatchKg;
 
   const rows = [
     {

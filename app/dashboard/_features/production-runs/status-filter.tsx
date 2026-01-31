@@ -1,11 +1,12 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
 const STATUSES = ["All", "Active", "Completed"] as const;
 
 export default function StatusFilter() {
   const router = useRouter();
+  const pathname = usePathname();
   const searchParams = useSearchParams();
   const current = searchParams.get("status") || "All";
 
@@ -16,7 +17,7 @@ export default function StatusFilter() {
     } else {
       params.set("status", status);
     }
-    router.push(`/dashboard?${params.toString()}`);
+    router.push(`${pathname}?${params.toString()}`);
   }
 
   return (

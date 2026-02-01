@@ -25,12 +25,14 @@ interface AdjustStockDialogProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   itemType: "finished_good" | "raw_material";
+  preselectedSku?: string;
 }
 
 export default function AdjustStockDialog({
   open,
   onOpenChange,
   itemType,
+  preselectedSku,
 }: AdjustStockDialogProps) {
   const [goods, setGoods] = useState<FinishedGood[]>([]);
   const [rawMaterials, setRawMaterials] = useState<RawMaterial[]>([]);
@@ -51,6 +53,16 @@ export default function AdjustStockDialog({
   const filteredGoods = company
     ? goods.filter((g) => g.company === company)
     : [];
+
+  useEffect(() => {
+    if (open && preselectedSku) {
+      setSku(preselectedSku);
+      if (itemType === "finished_good") {
+        const match = goods.find((g) => g.sku === preselectedSku);
+        if (match) setCompany(match.company);
+      }
+    }
+  }, [open, preselectedSku, goods, itemType]);
 
   useEffect(() => {
     if (!open) return;
@@ -159,6 +171,7 @@ export default function AdjustStockDialog({
                       setCompany(e.target.value);
                       setSku("");
                     }}
+                    disabled={!!preselectedSku}
                     className={selectClass}
                   >
                     <option value="">Select a company</option>
@@ -176,7 +189,7 @@ export default function AdjustStockDialog({
                     id="adj-good"
                     value={sku}
                     onChange={(e) => setSku(e.target.value)}
-                    disabled={!company}
+                    disabled={!company || !!preselectedSku}
                     className={selectClass}
                   >
                     <option value="">
@@ -199,6 +212,7 @@ export default function AdjustStockDialog({
                   id="adj-raw"
                   value={sku}
                   onChange={(e) => setSku(e.target.value)}
+                  disabled={!!preselectedSku}
                   className={selectClass}
                 >
                   <option value="">Select a raw material</option>

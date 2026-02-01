@@ -15,29 +15,25 @@ export function InventoryTable({
 }: InventoryTableProps) {
   const [tab, setTab] = useState<"finished" | "raw">("finished");
   const [filter, setFilter] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
   const [adjustOpen, setAdjustOpen] = useState(false);
-  const ITEMS_PER_PAGE = 10;
+  const [adjustSku, setAdjustSku] = useState<string | undefined>(undefined);
 
   const items = tab === "finished" ? finishedGoods : rawMaterials;
-  
-  const filteredItems = items.filter(item => 
-      item.name.toLowerCase().includes(filter.toLowerCase()) || 
-      item.sku.toLowerCase().includes(filter.toLowerCase())
-  );
 
-  const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const paginatedItems = filteredItems.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+  const sortedItems = [...items].sort((a, b) => a.sku.localeCompare(b.sku));
+
+  const filteredItems = sortedItems.filter(item =>
+    item.name.toLowerCase().includes(filter.toLowerCase()) ||
+    item.sku.toLowerCase().includes(filter.toLowerCase())
+  );
 
   const handleTabChange = (newTab: "finished" | "raw") => {
     setTab(newTab);
-    setCurrentPage(1);
+    setFilter("");
   };
 
   const handleFilterChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFilter(e.target.value);
-    setCurrentPage(1);
   };
 
   return (
@@ -69,66 +65,52 @@ export function InventoryTable({
       </div>
 
       {/* Toolbar */}
-      <div className="flex items-center justify-between p-4 border-b border-border bg-muted/30">
-        <div className="flex items-center gap-2">
-          <div className="relative">
-             <span className="absolute left-2.5 top-2.5 material-symbols-outlined text-lg text-muted-foreground">search</span>
-             <input 
-                type="text" 
-                placeholder="Search..." 
-                value={filter}
-                onChange={handleFilterChange}
-                className="pl-9 h-9 text-sm rounded-lg border border-input bg-background w-64 focus:outline-none focus:ring-2 focus:ring-ring"
-             />
-          </div>
-          <button className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-muted-foreground border border-input rounded-lg bg-background hover:bg-accent transition-colors">
-            <span className="material-symbols-outlined text-lg">filter_list</span>
-            Filter
-          </button>
+      <div className="flex items-center p-4 border-b border-border bg-muted/30">
+        <div className="relative">
+          <span className="absolute left-2.5 top-2.5 material-symbols-outlined text-lg text-muted-foreground">search</span>
+          <input
+            type="text"
+            placeholder="Search..."
+            value={filter}
+            onChange={handleFilterChange}
+            className="pl-9 h-9 text-sm rounded-lg border border-input bg-background w-64 focus:outline-none focus:ring-2 focus:ring-ring"
+          />
         </div>
-        <button
-          onClick={() => setAdjustOpen(true)}
-          className="flex items-center gap-2 bg-primary hover:bg-primary/90 text-primary-foreground px-4 py-2 rounded-lg text-sm font-bold shadow-sm transition-all"
-        >
-          <span className="material-symbols-outlined text-lg">add</span>
-          Adjust Stock
-        </button>
       </div>
 
       {/* Table */}
-      <div className="overflow-x-auto">
+      <div className="overflow-auto max-h-[400px]">
         <table className="w-full text-left border-collapse">
-          <thead>
+          <thead className="sticky top-0 z-10">
             <tr className="bg-muted/50 border-b border-border">
-              <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground bg-muted/50">
                 SKU
               </th>
-              <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground bg-muted/50">
                 Item Name
               </th>
-              <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground bg-muted/50">
                 Category
               </th>
-              <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground text-right">
+              <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground text-right bg-muted/50">
                 Current Stock
               </th>
-              <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
-                Unit
-              </th>
-              <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+              <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground bg-muted/50">
                 Status
+              </th>
+              <th className="px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground bg-muted/50">
               </th>
             </tr>
           </thead>
           <tbody className="divide-y divide-border">
-            {paginatedItems.length === 0 ? (
+            {filteredItems.length === 0 ? (
                 <tr>
                     <td colSpan={6} className="px-6 py-8 text-center text-muted-foreground">
                         No items found.
                     </td>
                 </tr>
             ) : (
-                paginatedItems.map((item) => (
+                filteredItems.map((item) => (
                 <tr
                     key={item.sku}
                     className="hover:bg-muted/50 transition-colors"
@@ -145,13 +127,22 @@ export function InventoryTable({
                     </span>
                     </td>
                     <td className="px-6 py-4 text-sm font-bold text-right">
-                    {item.current_stock.toLocaleString()}
-                    </td>
-                    <td className="px-6 py-4 text-sm text-muted-foreground">
-                    {item.unit}
+                    {item.current_stock.toLocaleString()} <span className="text-muted-foreground font-medium">{item.unit}</span>
                     </td>
                     <td className="px-6 py-4">
                         <StatusBadge status={item.status} />
+                    </td>
+                    <td className="px-6 py-4">
+                        <button
+                          onClick={() => {
+                            setAdjustSku(item.sku);
+                            setAdjustOpen(true);
+                          }}
+                          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-primary hover:bg-primary/10 rounded-lg transition-colors"
+                        >
+                          <span className="material-symbols-outlined text-base">edit</span>
+                          Adjust
+                        </button>
                     </td>
                 </tr>
                 ))
@@ -160,36 +151,18 @@ export function InventoryTable({
         </table>
       </div>
 
-      {/* Pagination Footer */}
-      <div className="px-6 py-4 border-t border-border flex items-center justify-between">
+      {/* Footer */}
+      <div className="px-6 py-3 border-t border-border">
         <p className="text-sm text-muted-foreground">
-            Showing {filteredItems.length > 0 ? startIndex + 1 : 0} to {Math.min(startIndex + ITEMS_PER_PAGE, filteredItems.length)} of {filteredItems.length} items
+          {filteredItems.length} {filteredItems.length === 1 ? "item" : "items"}
         </p>
-        <div className="flex gap-2">
-          <button
-            className="px-3 py-1 border border-input rounded text-sm text-muted-foreground disabled:opacity-50 hover:bg-accent hover:text-accent-foreground transition-colors disabled:hover:bg-transparent"
-            disabled={currentPage === 1}
-            onClick={() => setCurrentPage(p => Math.max(1, p - 1))}
-          >
-            Previous
-          </button>
-          <button className="px-3 py-1 bg-primary text-primary-foreground rounded text-sm font-bold">
-            {currentPage}
-          </button>
-          <button 
-            className="px-3 py-1 border border-input rounded text-sm text-muted-foreground disabled:opacity-50 hover:bg-accent hover:text-accent-foreground transition-colors disabled:hover:bg-transparent"
-            disabled={currentPage >= totalPages}
-            onClick={() => setCurrentPage(p => Math.min(totalPages, p + 1))}
-          >
-            Next
-          </button>
-        </div>
       </div>
 
       <AdjustStockDialog
         open={adjustOpen}
-        onOpenChange={setAdjustOpen}
+        onOpenChange={(open) => { setAdjustOpen(open); if (!open) setAdjustSku(undefined); }}
         itemType={tab === "finished" ? "finished_good" : "raw_material"}
+        preselectedSku={adjustSku}
       />
     </div>
   );
@@ -211,7 +184,7 @@ function StatusBadge({ status }: { status: InventoryItem["status"] }) {
         )
     }
     return (
-        <span className="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-bold bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
+        <span className="inline-flex items-center justify-center px-2.5 py-1 rounded-full text-xs font-bold leading-none bg-slate-200 text-slate-600 dark:bg-slate-800 dark:text-slate-400">
             Out of Stock
         </span>
     )

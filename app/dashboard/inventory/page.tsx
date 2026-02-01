@@ -2,11 +2,9 @@ import { Suspense } from "react";
 import { company } from "@/app/config/company";
 import {
   getFinishedGoodsInventory,
-  getInventoryStats,
   getRawMaterialsInventory,
   getStockMovements,
 } from "./_lib/data";
-import { InventoryStatsCards } from "./_components/inventory-stats";
 import { InventoryTable } from "./_components/inventory-table";
 import { StockLedger } from "./_components/stock-ledger";
 
@@ -15,8 +13,7 @@ export const metadata = {
 };
 
 export default async function InventoryPage() {
-  const [stats, finishedGoods, rawMaterials, movements] = await Promise.all([
-    getInventoryStats(),
+  const [finishedGoods, rawMaterials, movements] = await Promise.all([
     getFinishedGoodsInventory(),
     getRawMaterialsInventory(),
     getStockMovements(),
@@ -24,16 +21,6 @@ export default async function InventoryPage() {
 
   return (
     <div className="flex-1 w-full max-w-[1600px] mx-auto p-4 md:p-6 space-y-6">
-      {/* 
-        Stats Section 
-      */}
-      <Suspense fallback={<div>Loading stats...</div>}>
-        <InventoryStatsCards stats={stats} />
-      </Suspense>
-
-      {/* 
-        Main Content Grid 
-      */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
         
         {/* Inventory Section (Left 8 cols) */}

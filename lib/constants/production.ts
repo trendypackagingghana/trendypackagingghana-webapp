@@ -13,8 +13,7 @@ export const PRODUCTION_CONSTANTS = {
   LABOUR_COST_PER_HOUR: 25,
 
   /** Raw material cost per kg */
-  RAW_COST_PER_KG: 1.5,
-
+  RAW_COST_PER_KG: 20.0,
   /** Masterbatch cost per kg */
-  MASTERBATCH_COST_PER_KG: 5.0,
+  MASTERBATCH_COST_PER_KG: 60.0,
 } as const;

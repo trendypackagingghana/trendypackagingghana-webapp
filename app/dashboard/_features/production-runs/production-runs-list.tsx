@@ -1,12 +1,16 @@
 import { getProductionRuns } from "./_lib/data";
-import ProductionRunCard from "./production-run-card";
+import ProductionRunRow from "./production-run-row";
 
 export default async function ProductionRunsList({
   status,
+  dateFrom,
+  dateTo,
 }: {
   status?: string;
+  dateFrom?: string;
+  dateTo?: string;
 }) {
-  const { data: runs, error } = await getProductionRuns(status);
+  const { data: runs, error } = await getProductionRuns(status, dateFrom, dateTo);
 
   if (error) {
     console.error("Production runs error:", error);
@@ -32,12 +36,41 @@ export default async function ProductionRunsList({
   }
 
   return (
-    <div className="flex gap-4 md:gap-6 overflow-x-auto pb-2 scrollbar-thin">
-      {runs.map((run) => (
-        <div key={run.id} className="min-w-[280px] max-w-[320px] flex-shrink-0">
-          <ProductionRunCard run={run} />
-        </div>
-      ))}
+    <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
+      <div className="overflow-x-auto">
+        <table className="w-full text-left border-collapse">
+          <thead>
+            <tr className="bg-muted/50 border-b border-border">
+              <th className="px-4 sm:px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                SKU
+              </th>
+              <th className="px-4 sm:px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                Date
+              </th>
+              <th className="px-4 sm:px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                Shift
+              </th>
+              <th className="px-4 sm:px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground text-right">
+                Target
+              </th>
+              <th className="px-4 sm:px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground text-right hidden sm:table-cell">
+                Actual
+              </th>
+              <th className="px-4 sm:px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground text-right hidden md:table-cell">
+                Cost
+              </th>
+              <th className="px-4 sm:px-6 py-4 text-xs font-bold uppercase tracking-wider text-muted-foreground">
+                Status
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-border">
+            {runs.map((run) => (
+              <ProductionRunRow key={run.id} run={run} />
+            ))}
+          </tbody>
+        </table>
+      </div>
     </div>
   );
 }

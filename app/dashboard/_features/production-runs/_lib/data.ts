@@ -4,7 +4,11 @@ import type { ProductionRun } from "@/types/production";
 const VALID_STATUSES = ["Active", "Completed"];
 const STATUS_ORDER: Record<string, number> = { Active: 0, Completed: 1 };
 
-export async function getProductionRuns(status?: string): Promise<{
+export async function getProductionRuns(
+  status?: string,
+  dateFrom?: string,
+  dateTo?: string
+): Promise<{
   data: ProductionRun[] | null;
   error: string | null;
 }> {
@@ -19,6 +23,14 @@ export async function getProductionRuns(status?: string): Promise<{
 
   if (status && VALID_STATUSES.includes(status)) {
     query = query.eq("status", status);
+  }
+
+  if (dateFrom) {
+    query = query.gte("planned_start_time", `${dateFrom}T00:00:00`);
+  }
+
+  if (dateTo) {
+    query = query.lte("planned_start_time", `${dateTo}T23:59:59`);
   }
 
   const { data: runs, error } = await query;

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
-import { NAV_ITEMS } from "../_lib/navigation";
+import { NAV_ITEMS, isNavGroup, type NavItem } from "../_lib/navigation";
 import { company } from "@/app/config/company";
 
 interface SidebarProps {
@@ -13,6 +13,31 @@ interface SidebarProps {
 export default function Sidebar({ open, onClose }: SidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
+
+  function renderNavLink(item: NavItem) {
+    const isActive =
+      item.href === "/dashboard"
+        ? pathname === "/dashboard"
+        : pathname.startsWith(item.href);
+
+    return (
+      <Link
+        key={item.href}
+        href={item.href}
+        onClick={onClose}
+        className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
+          isActive
+            ? "bg-foreground/10 text-foreground font-semibold border-r-4 border-foreground"
+            : "text-muted-foreground hover:bg-muted font-medium"
+        }`}
+      >
+        <span className="material-symbols-outlined text-[20px]">
+          {item.icon}
+        </span>
+        {item.label}
+      </Link>
+    );
+  }
 
   async function handleSignOut() {
     await fetch("/api/auth/signout", { method: "POST" });
@@ -29,29 +54,18 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
 
         {/* Nav links */}
         <nav className="flex flex-col gap-1">
-          {NAV_ITEMS.map((item) => {
-            const isActive =
-              item.href === "/dashboard"
-                ? pathname === "/dashboard"
-                : pathname.startsWith(item.href);
-
-            return (
-              <Link
-                key={item.href}
-                href={item.href}
-                onClick={onClose}
-                className={`flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm transition-colors ${
-                  isActive
-                    ? "bg-foreground/10 text-foreground font-semibold border-r-4 border-foreground"
-                    : "text-muted-foreground hover:bg-muted font-medium"
-                }`}
-              >
-                <span className="material-symbols-outlined text-[20px]">
-                  {item.icon}
-                </span>
-                {item.label}
-              </Link>
-            );
+          {NAV_ITEMS.map((entry, i) => {
+            if (isNavGroup(entry)) {
+              return (
+                <div key={entry.label} className={i > 0 ? "mt-4" : ""}>
+                  <p className="px-3 mb-1 text-[10px] font-semibold uppercase tracking-widest text-muted-foreground/60">
+                    {entry.label}
+                  </p>
+                  {entry.items.map((item) => renderNavLink(item))}
+                </div>
+              );
+            }
+            return renderNavLink(entry);
           })}
         </nav>
       </div>

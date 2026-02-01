@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Sidebar from "./sidebar";
+import { company } from "@/app/config/company";
 
 export default function DashboardShell({
   children,
@@ -26,7 +27,7 @@ export default function DashboardShell({
               <span className="material-symbols-outlined">menu</span>
             </button>
             <span className="text-sm font-bold leading-tight">
-              Trendy Packaging
+              {company.legalName}
             </span>
             <div className="w-10" />
           </div>

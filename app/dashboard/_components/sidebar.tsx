@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import { NAV_ITEMS } from "../_lib/navigation";
+import { company } from "@/app/config/company";
 
 interface SidebarProps {
   open: boolean;
@@ -23,10 +24,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
       <div className="flex flex-col gap-6 sm:gap-8">
         {/* Branding */}
         <div className="flex flex-col">
-          <h1 className="text-sm font-bold leading-tight">Trendy Packaging</h1>
-          <p className="text-[10px] text-muted-foreground uppercase tracking-widest font-semibold">
-            Ghana Limited
-          </p>
+          <h1 className="text-sm font-bold leading-tight">{company.legalName}</h1>
         </div>
 
         {/* Nav links */}

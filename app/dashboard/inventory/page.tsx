@@ -1,4 +1,5 @@
 import { Suspense } from "react";
+import { company } from "@/app/config/company";
 import {
   getFinishedGoodsInventory,
   getInventoryStats,
@@ -10,7 +11,7 @@ import { InventoryTable } from "./_components/inventory-table";
 import { StockLedger } from "./_components/stock-ledger";
 
 export const metadata = {
-  title: "Inventory | Trendy Packaging",
+  title: `Inventory | ${company.legalName}`,
 };
 
 export default async function InventoryPage() {

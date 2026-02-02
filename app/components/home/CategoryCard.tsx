@@ -9,7 +9,7 @@ interface CategoryCardProps {
 
 const CategoryCard = ({ title, description, href, imageUrl }: CategoryCardProps) => {
   return (
-    <article className="flex-none w-80 group cursor-pointer bg-card rounded-xl border border-border overflow-hidden hover:shadow-lg transition-shadow">
+    <article className="flex-none w-80 snap-start group cursor-pointer bg-card rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-lg transition-shadow">
       <div className="relative h-48 w-full overflow-hidden mb-3">
         <div
           className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"

@@ -7,8 +7,8 @@ const MapSection = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   return (
-    <div className="mt-16 w-full">
-      <div className="rounded-2xl overflow-hidden border border-border h-[400px] relative">
+    <div className="w-full h-full">
+      <div className="rounded-2xl overflow-hidden border border-border h-full min-h-[350px] relative">
         {/* Loading State */}
         {isLoading && (
           <div className="absolute inset-0 bg-muted flex flex-col items-center justify-center gap-4">

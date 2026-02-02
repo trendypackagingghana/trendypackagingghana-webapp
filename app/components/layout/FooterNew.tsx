@@ -2,19 +2,19 @@ import Link from "next/link";
 import { company } from "@/app/config/company";
 
 const FooterNew = () => {
-  const productLinks = [
-    { name: "Cosmetic Jars", href: "#" },
-    { name: "Lotion Bottles", href: "#" },
-    { name: "Pharma Vials", href: "#" },
-    { name: "Household Jerrycans", href: "#" },
-    { name: "Caps & Closures", href: "#" },
+  const productItems = [
+    "Cosmetic Jars",
+    "Lotion Bottles",
+    "Pharma Vials",
+    "Household Jerrycans",
+    "Caps & Closures",
   ];
 
-  const companyLinks = [
-    { name: "Manufacturing Process", href: "#" },
-    { name: "Quality Control", href: "#" },
-    { name: "Sustainability", href: "#" },
-    { name: "Contact", href: "/contact" },
+  const companyItems = [
+    "Manufacturing Process",
+    "Quality Control",
+    "Sustainability",
+    "Contact",
   ];
 
   return (
@@ -32,32 +32,24 @@ const FooterNew = () => {
         </div>
 
         {/* Products Column */}
-        <nav aria-label="Products">
+        <div>
           <h4 className="font-bold mb-6 text-foreground">Products</h4>
           <ul className="space-y-4 text-sm text-muted-foreground">
-            {productLinks.map((link) => (
-              <li key={link.name}>
-                <Link href={link.href} className="hover:text-primary transition-colors">
-                  {link.name}
-                </Link>
-              </li>
+            {productItems.map((name) => (
+              <li key={name}>{name}</li>
             ))}
           </ul>
-        </nav>
+        </div>
 
         {/* Company Column */}
-        <nav aria-label="Company">
+        <div>
           <h4 className="font-bold mb-6 text-foreground">Company</h4>
           <ul className="space-y-4 text-sm text-muted-foreground">
-            {companyLinks.map((link) => (
-              <li key={link.name}>
-                <Link href={link.href} className="hover:text-primary transition-colors">
-                  {link.name}
-                </Link>
-              </li>
+            {companyItems.map((name) => (
+              <li key={name}>{name}</li>
             ))}
           </ul>
-        </nav>
+        </div>
 
         {/* Contact Column */}
         <div className="col-span-2 md:col-span-1">

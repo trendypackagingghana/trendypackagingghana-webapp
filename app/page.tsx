@@ -2,7 +2,7 @@ import Header from "./components/layout/Header";
 import HeroBanner from "./components/home/HeroBanner";
 import CategoryCarousel from "./components/home/CategoryCarousel";
 import FeatureCards from "./components/home/FeatureCards";
-import NewsletterCTA from "./components/home/NewsletterCTA";
+
 import FooterNew from "./components/layout/FooterNew";
 import MobileBottomNav from "./components/layout/MobileBottomNav";
 
@@ -15,7 +15,7 @@ export default function Home() {
         <HeroBanner />
         <CategoryCarousel />
         <FeatureCards />
-        <NewsletterCTA />
+
       </main>
 
       <FooterNew />

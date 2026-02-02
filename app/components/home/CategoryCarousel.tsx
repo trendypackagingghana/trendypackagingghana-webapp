@@ -39,7 +39,7 @@ const CategoryCarousel = () => {
       </div>
 
       <div className="px-4 md:px-10 overflow-hidden">
-        <div className="flex overflow-x-auto pb-4 scrollbar-hide gap-6">
+        <div className="flex overflow-x-auto pb-4 scrollbar-hide gap-6 scroll-smooth snap-x snap-mandatory">
           {categories.map((category, index) => (
             <CategoryCard
               key={index}

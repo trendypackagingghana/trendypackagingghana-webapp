@@ -9,10 +9,28 @@ const envSchema = z.object({
 // Only validate server-side env vars when running on the server
 const serverSchema = typeof window === "undefined" ? envSchema : envSchema.omit({ SUPABASE_SERVICE_ROLE_KEY: true });
 
-export const env = serverSchema.parse({
-  NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
-  NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-  ...(typeof window === "undefined" && {
-    SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
-  }),
-}) as z.infer<typeof envSchema>;
+try {
+  serverSchema.parse({
+    NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+    NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    ...(typeof window === "undefined" && {
+      SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    }),
+  });
+} catch (error) {
+  if (error instanceof z.ZodError) {
+    console.error("❌ Invalid environment variables:", error.flatten().fieldErrors);
+    throw new Error("Invalid environment variables");
+  }
+}
+
+export const env = (typeof window === "undefined"
+  ? envSchema.parse({
+      NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+      SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    })
+  : envSchema.omit({ SUPABASE_SERVICE_ROLE_KEY: true }).parse({
+      NEXT_PUBLIC_SUPABASE_URL: process.env.NEXT_PUBLIC_SUPABASE_URL,
+      NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+    })) as z.infer<typeof envSchema>;

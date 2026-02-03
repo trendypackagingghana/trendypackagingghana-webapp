@@ -4,6 +4,11 @@ import { createClient } from "@/lib/supabase/server";
 export async function GET() {
   const supabase = await createClient();
 
+  const { data: { user } } = await supabase.auth.getUser();
+  if (!user) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
   const { data, error } = await supabase
     .from("finished_goods")
     .select("sku, category, company, size, color, pieces_per_hour, pieces_per_bag, weight, masterbatch_percentage, machine_type")

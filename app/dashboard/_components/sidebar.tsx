@@ -49,9 +49,6 @@ export default function Sidebar({ open, onClose, role }: SidebarProps) {
             : "text-muted-foreground hover:bg-muted font-medium"
         }`}
       >
-        <span className="material-symbols-outlined text-[20px]">
-          {item.icon}
-        </span>
         {item.label}
       </Link>
     );
@@ -94,7 +91,6 @@ export default function Sidebar({ open, onClose, role }: SidebarProps) {
           onClick={handleSignOut}
           className="flex items-center gap-3 w-full px-3 py-2.5 rounded-lg text-sm font-medium text-muted-foreground hover:bg-muted transition-colors"
         >
-          <span className="material-symbols-outlined text-[20px]">logout</span>
           Sign out
         </button>
       </div>

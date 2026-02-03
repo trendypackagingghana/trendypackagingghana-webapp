@@ -10,10 +10,7 @@ export default function DashboardError({
   return (
     <div className="flex items-center justify-center min-h-[50vh] p-4">
       <div className="rounded-xl border bg-card p-6 max-w-md w-full text-center space-y-4">
-        <span className="material-symbols-outlined text-4xl text-destructive">
-          error
-        </span>
-        <h2 className="text-lg font-semibold">Something went wrong</h2>
+        <h2 className="text-lg font-semibold text-destructive">Something went wrong</h2>
         <p className="text-sm text-muted-foreground">{error.message}</p>
         <button
           onClick={reset}

@@ -33,7 +33,7 @@ export default function DashboardShell({
               className="p-2 -ml-2 rounded-lg text-muted-foreground hover:bg-muted transition-colors"
               aria-label="Open menu"
             >
-              <span className="material-symbols-outlined">menu</span>
+              Menu
             </button>
             <span className="text-sm font-bold leading-tight">
               {company.legalName}

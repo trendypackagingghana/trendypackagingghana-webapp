@@ -24,9 +24,6 @@ export default async function ProductionRunsList({
   if (!runs || runs.length === 0) {
     return (
       <div className="text-center py-16 text-muted-foreground">
-        <span className="material-symbols-outlined text-5xl mb-4 block">
-          manufacturing
-        </span>
         <p className="text-lg font-medium">No production runs found</p>
         <p className="text-sm mt-1">
           Tap the + button to create a new production run.

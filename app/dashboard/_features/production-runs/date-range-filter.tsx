@@ -79,9 +79,6 @@ export default function DateRangeFilter() {
               : "bg-muted text-muted-foreground hover:bg-muted/80"
           }`}
         >
-          <span className="material-symbols-outlined text-sm">
-            calendar_month
-          </span>
           {label}
         </button>
       </PopoverTrigger>

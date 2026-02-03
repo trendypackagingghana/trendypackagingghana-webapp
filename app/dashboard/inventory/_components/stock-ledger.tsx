@@ -5,9 +5,6 @@ export function StockLedger({ movements }: { movements: StockMovement[] }) {
     <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden flex flex-col h-full">
       <div className="p-5 border-b border-border flex items-center justify-between bg-muted/30">
         <h3 className="text-sm font-bold flex items-center gap-2">
-          <span className="material-symbols-outlined text-primary">
-            history
-          </span>
           Stock Ledger
         </h3>
         <button className="text-primary text-xs font-bold hover:underline">
@@ -47,8 +44,8 @@ function LedgerItem({ move }: { move: StockMovement }) {
                 : "bg-rose-100 dark:bg-rose-900/30 text-rose-600"
             }`}
           >
-            <span className="material-symbols-outlined text-lg">
-              {isIncoming ? "arrow_downward" : "arrow_upward"}
+            <span className="text-sm font-bold">
+              {isIncoming ? "\u2193" : "\u2191"}
             </span>
           </div>
           <div>

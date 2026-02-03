@@ -22,7 +22,7 @@ export default function CreateRunFab() {
         className="fixed bottom-6 right-6 rounded-full shadow-lg hover:shadow-xl z-40 size-14"
         aria-label="Create production run"
       >
-        <span className="material-symbols-outlined text-2xl">add</span>
+        +
       </Button>
 
       <Dialog open={isOpen} onOpenChange={setIsOpen}>

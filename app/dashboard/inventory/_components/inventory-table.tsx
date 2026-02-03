@@ -48,7 +48,6 @@ export function InventoryTable({
               : "border-transparent text-muted-foreground hover:text-foreground"
           }`}
         >
-          <span className="material-symbols-outlined text-lg">check_box</span>
           Finished Goods
         </button>
         <button
@@ -59,7 +58,6 @@ export function InventoryTable({
               : "border-transparent text-muted-foreground hover:text-foreground"
           }`}
         >
-          <span className="material-symbols-outlined text-lg">layers</span>
           Raw Materials
         </button>
       </div>
@@ -67,13 +65,12 @@ export function InventoryTable({
       {/* Toolbar */}
       <div className="flex items-center p-4 border-b border-border bg-muted/30">
         <div className="relative">
-          <span className="absolute left-2.5 top-2.5 material-symbols-outlined text-lg text-muted-foreground">search</span>
           <input
             type="text"
             placeholder="Search..."
             value={filter}
             onChange={handleFilterChange}
-            className="pl-9 h-9 text-sm rounded-lg border border-input bg-background w-64 focus:outline-none focus:ring-2 focus:ring-ring"
+            className="pl-3 h-9 text-sm rounded-lg border border-input bg-background w-64 focus:outline-none focus:ring-2 focus:ring-ring"
           />
         </div>
       </div>
@@ -140,7 +137,6 @@ export function InventoryTable({
                           }}
                           className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-bold text-primary hover:bg-primary/10 rounded-lg transition-colors"
                         >
-                          <span className="material-symbols-outlined text-base">edit</span>
                           Adjust
                         </button>
                     </td>

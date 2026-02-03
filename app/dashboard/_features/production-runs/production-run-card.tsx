@@ -134,9 +134,7 @@ export default function ProductionRunCard({ run }: { run: ProductionRun }) {
                 {run.expected_hours} hrs
               </span>
             </span>
-            <span className="material-symbols-outlined text-base text-muted-foreground">
-              visibility
-            </span>
+            <span className="text-xs text-muted-foreground font-medium">View</span>
           </div>
         )}
       </div>

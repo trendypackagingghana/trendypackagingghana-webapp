@@ -43,9 +43,6 @@ export default function LowStockBanner({ alerts }: { alerts: string[] }) {
                 key={i}
                 className="flex items-center gap-3 bg-amber-50 border border-amber-100 p-3 rounded-xl"
               >
-                <span className="material-symbols-outlined text-amber-500 shrink-0 text-lg">
-                  warning
-                </span>
                 <p className="flex-1 text-xs sm:text-sm font-semibold text-amber-800 leading-snug">
                   {message}
                 </p>

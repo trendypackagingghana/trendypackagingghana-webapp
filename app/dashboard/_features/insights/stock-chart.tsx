@@ -20,9 +20,6 @@ export default function StockChart() {
         </div>
         <button className="text-foreground text-[10px] sm:text-xs font-bold flex items-center gap-0.5">
           View All
-          <span className="material-symbols-outlined text-sm">
-            chevron_right
-          </span>
         </button>
       </div>
 

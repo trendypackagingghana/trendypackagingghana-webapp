@@ -14,7 +14,6 @@ export function InventoryStatsCards({ stats }: { stats: InventoryStats }) {
           <p className="text-2xl font-bold mt-1 text-destructive">-- Items</p>
         </div>
         <div className="flex items-center gap-1 mt-3 text-destructive text-xs font-bold">
-          <span className="material-symbols-outlined text-sm">warning</span>
           <span>Urgent Attention Required</span>
         </div>
       </div>
@@ -24,7 +23,6 @@ export function InventoryStatsCards({ stats }: { stats: InventoryStats }) {
           <p className="text-2xl font-bold mt-1">-- Units</p>
         </div>
         <div className="flex items-center gap-1 mt-3 text-primary text-xs font-bold">
-          <span className="material-symbols-outlined text-sm">inventory</span>
           <span>Across categories</span>
         </div>
       </div>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, ReactNode } from "react";
 
-import TPGLLoader from "./TPGLLoader";
+import PageSpinner from "../page-spinner";
 
 interface LoadingSequenceProps {
   skeleton: ReactNode;
@@ -27,7 +27,7 @@ const LoadingSequence = ({
     return (
       <div className="relative flex min-h-screen w-full flex-col pt-16 bg-background">
         <main className="flex-1 max-w-[1280px] mx-auto w-full px-6 py-8">
-          <TPGLLoader />
+          <PageSpinner />
         </main>
       </div>
     );

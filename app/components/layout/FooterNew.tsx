@@ -82,6 +82,14 @@ const FooterNew = () => {
           </div>
         </div>
       </div>
+      <div className="max-w-7xl mx-auto mt-10 pt-6 border-t border-border text-center">
+        <p className="text-xs text-muted-foreground">
+          Designed and Developed with <span className="text-red-500">&#9829;</span> by{" "}
+          <a href="https://www.capitaltome.com/" target="_blank" rel="noopener noreferrer" className="underline hover:text-foreground transition-colors">
+            CapitalToMe
+          </a>
+        </p>
+      </div>
     </footer>
   );
 };

@@ -1,5 +1,5 @@
 import PageSpinner from "../_components/page-spinner";
 
-export default function ProductionLoading() {
+export default function AnalyticsLoading() {
   return <PageSpinner />;
 }
